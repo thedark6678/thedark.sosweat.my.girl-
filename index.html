@@ -79,7 +79,7 @@
 
   <div class="container" id="container">
     <h1>ILOVEYOU 💘</h1>
-    <p>Maukah kamu jadi wanitaku selamanya? 😳</p>
+    <p>Maukah kamu jadi kekasihku untuk selamanya? 😳</p>
     <div class="btn-container">
       <button class="btn" id="acceptBtn">Terima ❤️</button>
       <button class="btn" id="rejectBtn">Tolak ❌</button>
@@ -121,7 +121,7 @@
     acceptBtn.addEventListener("click", () => {
       if (!accepted) {
         accepted = true;
-        result.innerText = "Yayyy! Kamu sekarang resmi jadi wanitaku! 💍💑";
+        result.innerText = "Yayyy! Kamu sekarang resmi jadi tunanganku 💍💑";
         acceptBtn.textContent = "Kirimkan 💌";
         rejectBtn.classList.add("hidden");
         message.innerText = "";
@@ -130,7 +130,7 @@
         bgmusic.pause();
         jumpscare.style.display = "block";
         jumpscare.muted = false;
-        jumpscare.volume = 1;
+        jumpscare.volume = 10;
         jumpscare.play();
 
         if (jumpscare.requestFullscreen) {
