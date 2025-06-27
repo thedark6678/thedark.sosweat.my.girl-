@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>ILOVEYOU</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      background: linear-gradient(135deg, #f8bbd0, #f48fb1);
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .container {
+      background: #fff0f5;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      padding: 60px 80px 100px;
+      max-width: 800px;
+      text-align: center;
+      z-index: 2;
+      position: relative;
+    }
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      background-color: #d81b60;
+      color: white;
+      padding: 12px 28px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .btn:hover {
+      background-color: #ad1457;
+    }
+    .hidden {
+      display: none !important;
+    }
+    video#jumpscare {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: 9999;
+    }
+    audio {
+      display: none;
+    }
+    #linktree {
+      margin-top: 30px;
+    }
+    #message {
+      margin-top: 15px;
+      color: #880e4f;
+      font-weight: bold;
+      font-size: 18px;
+      transition: all 0.3s ease-in-out;
+    }
+  </style>
+</head>
+<body>
+  <audio id="bgmusic" autoplay loop>
+    <source src="romantis.mp3" type="audio/mp3">
+  </audio>
+
+  <div class="container" id="container">
+    <h1>ILOVEYOU 💘</h1>
+    <p>Maukah kamu jadi wanitaku selamanya? 😳</p>
+    <div class="btn-container">
+      <button class="btn" id="acceptBtn">Terima ❤️</button>
+      <button class="btn" id="rejectBtn">Tolak ❌</button>
+    </div>
+    <p id="result"></p>
+    <p id="message"></p>
+    <div id="linktree">
+      <a href="https://linktr.ee/thedark01" target="_blank" class="btn">Linktree 🌐</a>
+    </div>
+  </div>
+
+  <video id="jumpscare" src="video.mp4" preload="auto"></video>
+
+  <script>
+    const acceptBtn = document.getElementById("acceptBtn");
+    const rejectBtn = document.getElementById("rejectBtn");
+    const result = document.getElementById("result");
+    const container = document.getElementById("container");
+    const jumpscare = document.getElementById("jumpscare");
+    const bgmusic = document.getElementById("bgmusic");
+    const message = document.getElementById("message");
+
+    let accepted = false;
+    let rejectCount = 0;
+
+    const rejectMessages = [
+      "Jangan ditolak ihh 😭😭😭🙏",
+      "Pliss jangan tolak aku 😔",
+      "Aku tulus loh 😢",
+      "Yakin mau nolak? 😭",
+      "Hatiku fragile 💔",
+      "Jangan pergi 😭💘",
+      "Aku beneran serius 🥺",
+      "Masa sih kamu nolak aku 😣",
+      "Kasih aku satu kesempatan 😭",
+      "Cinta ini nyata 😭😭😭"
+    ];
+
+    acceptBtn.addEventListener("click", () => {
+      if (!accepted) {
+        accepted = true;
+        result.innerText = "Yayyy! Kamu sekarang resmi jadi wanitaku! 💍💑";
+        acceptBtn.textContent = "Kirimkan 💌";
+        rejectBtn.classList.add("hidden");
+        message.innerText = "";
+      } else {
+        container.style.display = "none";
+        bgmusic.pause();
+        jumpscare.style.display = "block";
+        jumpscare.muted = false;
+        jumpscare.volume = 1;
+        jumpscare.play();
+
+        if (jumpscare.requestFullscreen) {
+          jumpscare.requestFullscreen();
+        } else if (jumpscare.webkitRequestFullscreen) {
+          jumpscare.webkitRequestFullscreen();
+        } else if (jumpscare.msRequestFullscreen) {
+          jumpscare.msRequestFullscreen();
+        }
+      }
+    });
+
+    // Fungsi tombol tolak lari
+    const moveRejectBtn = () => {
+      const padding = 30;
+      const btnWidth = rejectBtn.offsetWidth;
+      const btnHeight = rejectBtn.offsetHeight;
+      const maxX = window.innerWidth - btnWidth - padding;
+      const maxY = window.innerHeight - btnHeight - padding;
+
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
+
+      rejectBtn.style.position = "absolute";
+      rejectBtn.style.left = `${x}px`;
+      rejectBtn.style.top = `${y}px`;
+
+      rejectCount++;
+
+      // Muncul pesan setiap 10x lari
+      if (rejectCount % 10 === 0) {
+        const msg = rejectMessages[Math.floor(Math.random() * rejectMessages.length)];
+        message.innerText = msg;
+      }
+    };
+
+    // Gunakan event mousemove agar responsif & anti klik
+    rejectBtn.addEventListener("mousemove", moveRejectBtn);
+    rejectBtn.addEventListener("click", (e) => {
+      e.preventDefault(); // cegah klik supaya tidak “tertangkap”
+      moveRejectBtn();
+    });
+
+    window.onbeforeunload = function () {
+      return "Kamu yakin mau ninggalin aku? 😢";
+    };
+
+    history.pushState(null, null, location.href);
+    window.addEventListener('popstate', function () {
+      history.pushState(null, null, location.href);
+    });
+  </script>
+</body>
+</html>
